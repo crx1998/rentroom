@@ -1,0 +1,274 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理系统</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-1.12.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <style>
+        *{
+            padding:0px;
+            margin:0px;
+        }
+        body{
+            background-image: url("images/t01330527cde4cfc826.jpg");
+            background-size: 100%;
+        }
+        .box{
+            width:60%;
+            margin:0 auto;
+        }
+        .checkorderbox{
+            display: none;
+        }
+        .checkorderbox p{
+             display: inline-block;
+            font-weight: 500;
+            padding-left:20px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">酒店订房管理系统</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">入住管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li class="active"><a href="/lobbycheck">大堂入住</a></li>
+                        <li><a href="/ordercheck">订单入住</a></li>
+                    </ul>
+                </li>
+                <li><a href="/checkout">退房管理</a></li>
+                <li><a href="/record">入房记录查询</a></li>
+                <li><a href="/roominfor">查询房间信息</a></li>
+                <li><a href="/roomadmin">房间管理</a></li>
+                <li><a href="/roompic">房间预览图</a></li>
+                <li><a href="/changemima">修改密码</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/del">退出系统</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="box">
+    <div class="form-group">
+        <div class="col-sm-4">
+            <input type="text" id="secher" placeholder="请输入手机号或姓名" class="form-control">
+        </div>
+        <label for="inputEmail3" class="col-sm-2 control-label">
+            <button class="btn btn-success" id="getdataseach">订单查询</button>
+        </label>
+    </div>
+    <h3 class="ordernum"></h3>
+    <div class="ordernumbox">
+    </div>
+    <div class="checkorderbox">
+        <div class="panel panel-default ">
+        <div class="panel-heading">
+            <h3 class="panel-title">订单</h3>
+        </div>
+        <div class="panel-body">
+            <div>
+                <ul class="list-group">
+                    <li class="list-group-item"><h4><span>入住时间:</span><p class="starttime"></p></h4></li>
+                    <li class="list-group-item"><h4><span>离店时间:</span><p class="endtime"></p></h4></li>
+                    <li class="list-group-item"> <h4><span>房间类型:</span><p class="roomnumber"></p></h4></li>
+                    <li class="list-group-item"> <h4><span>入住人姓名:</span><p class="checkinname"></p></h4></li>
+                    <li class="list-group-item"><h4><span>联系人:</span><p class="contactsname"></p></h4></li>
+                    <li class="list-group-item"> <h4><span>联系电话:</span><p class="contactstel"></p></h4></li>
+                    <li class="list-group-item"><h4><span>留言:</span><p class="ordercontent"></p></h4></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+        <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">办理入住</h3>
+        </div>
+        <div class="panel-body">
+            <li class="list-group-item"><h4><span>钱数：</span><p class="money"></p></h4></li>
+            <li class="list-group-item"><h4><span>房间号：</span><p class="roomhao"></p></h4></li>
+            <li class="list-group-item">
+                <div class="form-group">
+                    <label for="yonghuming">证件类型</label>
+                    <select name="cardtype">
+                        <option value="身份证">身份证</option>
+                    </select>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="form-group">
+                    <label for="yonghuming">证件号</label>
+                    <input type="number" class="form-control" name="cardnum" id="typenum">
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="form-group">
+                    <label for="yonghuming">姓名</label>
+                    <input type="text" class="form-control" name="contactsname" id="contactsname">
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="form-group">
+                    <label for="yonghuming">性别</label>
+                    <select name="sex">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+            </li>
+            <input type="button" value="提交订单" class="btn btn-success" id="addcheck">
+        </div>
+    </div>
+    </div>
+</div>
+<script>
+    var num=0
+    $("#getdataseach").eq(0).click(function(){
+        var val=$("#secher").val()
+        $.ajax({
+            "url":"/seachorder",
+            "data":{
+                data:val
+            },
+            "success":function(data){
+                if(data.length==0){
+                    alert("无此订单")
+                }else{
+                    var str=`共查询到${data.length}条订单`
+                    for(var i=1;i<data.length+1;i++){
+                        $(".ordernum").append('<button class="btn btn-success orderlist">订单'+i+'</button>')
+                    }
+                    $(document).on("click",".orderlist",function(){
+                        var index=$(this).index()
+                        var datas=data[index]
+                        $(".roomhao").html("")
+                        showorder(datas)
+
+                    })
+                    function showorder(data){
+                        num=data.roomnum
+                        $(".checkorderbox").css("display","block")
+                        $(".starttime").html(data.starttime)
+                        $(".contactsname").html(data.contactsname)
+                        $(".contactstel").html(data.contactstel)
+                        $(".endtime").html(data.endtime)
+                        $(".checkinname").html(data.checkinname)
+                        $(".roomnum").html(data.roomnum)
+                        $(".roomnumber").html(data.roomnumber)
+                        $(".ordercontent").html(data.ordercontent)
+                        getmoney()
+                        console.log(data.roomnum)
+                        $(".roomhao").html()
+                        for(var i=0;i<data.roomnum;i++){
+                            var str=`<select class="roomhao1"></select>`
+                            $(".roomhao").append(str)
+                            getroomhao($(".roomnumber").html())
+                        }
+                    }
+                }
+             }
+        })
+    })
+    function getmoney(){
+        $.ajax({
+            "url":"/getroomtype",
+            // "type":"jsonp",
+            "success":function(data){
+                var data=data.data
+                var roomtype=$(".roomnumber").html()
+                getroomnum(roomtype,data)
+            }
+        })
+    }
+    function getroomnum(val,data){
+        for(var i=0;i<data.length;i++){
+            if(data[i].roomtypename == val){
+                $(".money").html(data[i].money)
+            }
+        }
+    }
+function getroomhao(val) {
+    $.ajax({
+        "url": "/getroompic",
+        "success": function (data) {
+            getroomhaos(val,data)
+        }
+    })
+}
+    function getroomhaos(val,data) {
+        $(".roomhao1").html("")
+        for(var i=0;i<data.length;i++){
+            if(data[i].roomtype == val && data[i].roomstate==0){
+                $(".roomhao1").append('<option value="'+data[i].roomnum+'">'+data[i].roomnum+'</option>')
+            }
+        }
+    }
+    var arr=[]
+    function orderrecord(){
+        for(var i=0;i<num;i++){
+            var obj={
+                starttime: $(".starttime").html(),
+                endtime: $(".endtime").html(),
+                roomnumber: $(".roomnumber").html(),
+                roomnum:$(".roomnum").html(),
+                checkinname:  $(".checkinname").html(),
+                contactsname: $(".contactsname").html(),
+                contactstel: $(".contactstel").html(),
+                ordercontent: $(".ordercontent").html(),
+                roomhao:0,
+                cardtype:"身份证",
+                cardnum:$("input[name=cardnum]").val(),
+                sex:$("input[name=sex]:checked").val()
+            }
+            arr.push(obj)
+            arr[i].roomhao=$(".roomhao1").eq(i).val()
+        }
+    }
+
+    $("#addcheck").click(function(){
+        orderrecord()
+       var arrs=JSON.stringify(arr)
+        console.log(arrs)
+        $.ajax({
+            "url":"/orderchecks",
+            "traditional":true,
+            "type":"post",
+            "data":{
+                data:arrs
+            },
+            "success":function(data){
+                alert("订单成功")
+                $.ajax({
+                    "url":"/delorder",
+                    "data":{
+                        contactstel: $(".contactstel").html(),
+                        roomnumber: $(".roomnumber").html(),
+                    },
+                    "success":function(data){
+                        window.location="/ordercheck"
+                    }
+                })
+            }
+        })
+    })
+</script>
+</body>
+</html>

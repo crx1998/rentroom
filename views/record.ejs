@@ -1,0 +1,163 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="css/jquery-ui.css" />
+    <link rel="stylesheet" href="themes/office/pqgrid.css" />
+    <link rel="stylesheet" href="css/pqgrid.min.css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-1.12.3.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/pqgrid.min.js"></script>
+    <style>
+        *{
+            padding:0px;
+            margin:0px;
+        }
+        /*body{*/
+        /*background-image: url("image/01300000829059126715068316312.jpg");*/
+        /*background-size: 100%;*/
+        /*}*/
+        .box{
+            width:100%;
+            margin:0 auto;
+        }
+        body{
+            background-image: url("images/t01330527cde4cfc826.jpg");
+            background-size: 100%;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">酒店订房管理系统</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">入住管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/lobbycheck">大堂入住</a></li>
+                        <li><a href="/ordercheck">订单入住</a></li>
+                    </ul>
+                </li>
+                <li><a href="/checkout">退房管理</a></li>
+                <li class="active"><a href="/record">入房记录查询</a></li>
+                <li><a href="/roominfor">查询房间信息</a></li>
+                <li><a href="/roomadmin">房间管理</a></li>
+                <li><a href="/roompic">房间预览图</a></li>
+                <li><a href="/changemima">修改密码</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/del">退出系统</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="box">
+    <div id="grid_filter" style="margin:5px auto;"></div>
+
+</div>
+<script>
+    var bootstrapButton = $.fn.button.noConflict() // return $.fn.button to previously assigned value
+    $.fn.bootstrapBtn = bootstrapButton
+$.ajax({
+    "url":"/findrecord",
+    "success":function(data){
+        $(function () {
+            //define colModel
+            var colM = [
+                { title: "住房号", minWidth: "90", dataIndx: "roomhao",
+                    filter: { type: 'textbox', condition: 'begin', listeners: ['keyup'] }
+                },
+                { title: "联系电话", dataIndx: "contactstel",minWidth: 100,
+                    filter: { type: 'textbox', condition: 'begin', listeners: ['keyup'] }
+                },
+                { title: "入住姓名", dataIndx: "checkinname",minWidth: 100,
+                    filter: { type: "textbox", condition: 'begin', listeners: ['keyup']
+                    }
+                },
+                { title: "入住时间", dataIndx: "starttime", minWidth: 130,
+                    filter: { type: "textbox", condition: 'begin', listeners: ['keyup']}
+                },
+                { title: "退房时间", minWidth: 130, dataIndx: "endtime",
+                    filter: { type: "textbox", condition: 'begin', listeners: ['keyup']}
+                },
+
+                { title: "证件号", minWidth: "90", dataIndx: "cardnum",
+                    filter: { type: "textbox", condition: 'begin', listeners: ['keyup']}
+                },
+                { title: "消费金额", minWidth: "90", dataIndx: "ordermoney",
+                    filter: { type: "textbox", condition: 'begin', listeners: ['keyup']}
+                },
+            ];
+            var obj = {
+                height: 300,
+                colModel: colM,
+                dataModel: {
+                    data:data
+                },
+                pageModel: { type: "local", rPP:5, strRpp: "{0}", strDisplay: "{0} to {1} of {2}" ,rPPOptions:[5,10,15]},
+                scrollModel: {autoFit: true},
+                flex: {one: true},
+                //pageModel: { type: "local", rPP: 50, rPPOptions: [10, 50, 100, 500, 1000] },
+                showBottom: false,
+                virtualX: true, virtualY: true,
+                wrap: false, hwrap: false,
+                editable: false,
+                filterModel: { on: true, mode: "AND", header: true },
+                title: "Shipping Orders",
+                resizable: true,
+                numberCell: { show: true },
+                formulas:[["diff_date", function( rd ){
+                    var oneDay = 24*60*60*1000,
+                        firstDate = new Date(rd.ShippedDate),
+                        secondDate = new Date(rd.OrderDate),
+                        diff = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+                    if( !isNaN(diff) ){
+                        return diff;
+                    }
+                }]],
+                toolbar:{
+                    items:[
+                        {
+                            type:'button',
+                            label: 'Toggle filter row',
+                            listener: function(){
+                                this.option('filterModel.header', !this.option('filterModel.header'));
+                                this.refresh();
+                            }
+                        },
+                        {
+                            type:'button',
+                            label: 'Reset filters',
+                            listener: function(){
+                                this.reset({filter: true});
+                            }
+                        }
+                    ]
+                }
+            };
+
+            $("#grid_filter").pqGrid(obj);
+
+        });
+
+    }
+})
+</script>
+</body>
+</html>

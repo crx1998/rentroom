@@ -1,0 +1,229 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理系统</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/jquery-ui.css" />
+    <link rel="stylesheet" href="themes/office/pqgrid.css" />
+    <link rel="stylesheet" href="css/pqgrid.min.css" />
+    <script src="js/jquery-1.12.3.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/pqgrid.min.js"></script>
+    <style>
+        *{
+            padding:0px;
+            margin:0px;
+        }
+        /*body{*/
+        /*background-image: url("image/01300000829059126715068316312.jpg");*/
+        /*background-size: 100%;*/
+        /*}*/
+        .box{
+            width:50%;
+            overflow: hidden;
+        }
+        .addroom{
+            width:45%;
+            position: absolute;
+            right: 0px;
+            top:10%;
+        }
+        .addroom p{
+            display: inline-block;
+            width:45%;
+            overflow: hidden;
+        }
+        .addroom .row{
+            margin-top:10px;
+        }
+        body{
+            background-image: url("images/t01330527cde4cfc826.jpg");
+            background-size: 100%;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">酒店订房管理系统</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">入住管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/lobbycheck">大堂入住</a></li>
+                        <li><a href="/ordercheck">订单入住</a></li>
+                    </ul>
+                </li>
+                <li><a href="/checkout">退房管理</a></li>
+                <li><a href="/record">入房记录查询</a></li>
+                <li class="active"><a href="/roominfor">查询房间信息</a></li>
+                <li><a href="/roomadmin">房间管理</a></li>
+                <li><a href="/roompic">房间预览图</a></li>
+                <li><a href="/changemima">修改密码</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/del">退出系统</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="box">
+<div id="grid_selection_checkbox"></div>
+</div>
+<div class="addroom">
+<div class="panel panel-default" style="width: 90%;margin: 0 auto">
+    <div class="panel-heading">
+        <h3 class="panel-title">操作</h3>
+    </div>
+    <div class="panel-body"  style="padding-left:20%">
+            <form action="/addroominfor" method="get">
+                <div class="row">
+                    <div class="col-lg-10">
+                        <div class="input-group">
+                                  <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">房间号</button>
+                                  </span>
+                            <input type="number" name="roomnum" class="form-control">
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-10">
+                        <div class="input-group">
+                                  <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">房间类型</button>
+                                  </span>
+                            <select name="roomtype" class="roomnumber form-control">
+                            </select>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-10">
+                        <div class="input-group">
+                                  <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">状态</button>
+                                  </span>
+                            </select>
+                            <select name="roomstate" class="form-control">
+                                <option value="0">是</option>
+                                <option value="1">否</option>
+                            </select>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-10">
+                        <div class="input-group">
+                                  <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">房间描述</button>
+                                  </span>
+                            </select>
+                            <input name="roomcontent" class="form-control">
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+                <p><input type="submit" value="增加"  class="btn btn-success" ></p>
+                <p><input type="reset" value="取消"  class="btn"></p>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    var bootstrapButton = $.fn.button.noConflict() // return $.fn.button to previously assigned value
+    $.fn.bootstrapBtn = bootstrapButton
+    $.ajax({
+        "url":"/getroompic",
+        "success":function(data){
+            for(var i=0;i<data.length;i++){
+                if(data[i].roomstate==0){
+                    data[i].roomstate="未出租"
+                }else{
+                    data[i].roomstate="已出租"
+                }
+            }
+            var obj = {
+                width: "100%",
+                height: 400,
+                title: "房间类型",
+                resizable: true,
+                draggable: false,
+                dataModel: {
+                    data: data
+                },
+                selectionModel: { type: 'none', subtype:'incr', cbHeader:true, cbAll:true},
+                pageModel: { type: "local", rPP:5, strRpp: "{0}", strDisplay: "{0} to {1} of {2}" ,rPPOptions:[5,10,15]},
+                colModel: [
+                    { title: "房间号", dataIndx: "roomnum", width: 80,align: "center",},
+                    { title: "房间类型", dataIndx: "roomtype", width: 120,align: "center",},
+                    { title: "房间状态", dataIndx: "roomstate", width: 80,align: "center",},
+                    { title: "房间描述", dataIndx: "roomcontent", dataType: "string", width: 200},
+                    { title: "房间位置", dataIndx: "roomposition", dataType: "string", width: 200,},
+                    {title: "", dataIndx: "state",align: "center",
+                        cb: { header: true, all: false },
+                        type: 'checkBoxSelection', cls: 'ui-state-default', resizable: false, sortable: false, editable: false
+                    }
+                ],
+                cellSave: function (event, ui) {
+                    // ui.rowData能够拿到这一行的全部数据！
+                    $.get("/updataroominfor", ui.rowData, function (data) {
+                        if(data.result == -1){
+                            alert("不好意思服务器出错了")
+                        }else{
+                            alert("修改成功")
+                        }
+                    });
+                },
+                toolbar: {
+                    items: [{
+                        type: 'button',
+                        label: '删除所选项',
+                        listeners: [{ 'click': function () {
+                                var $grid = $(this).closest('.pq-grid'),
+                                    selarray = $grid.pqGrid('selection', { type: 'row', method: 'getSelection' }),
+                                    ids = [];
+                                for (var i = 0, len = selarray.length; i < len; i++) {
+                                    var rowData = selarray[i].rowData;
+                                    console.log(selarray[0])
+                                    ids.push(rowData._id);
+                                }
+                                $.get("/delroominfor/"+ids,function (data) {
+                                    window.location="/roominfor"
+                                })
+                                alert(ids);
+                            }
+                        }]
+                    },
+                    ]
+                }
+            }
+            var $grid=$("#grid_selection_checkbox").pqGrid(obj);
+        }
+    })
+    $.ajax({
+        "url":"/getroomtype",
+        // "type":"jsonp",
+        "success":function(data){
+            var data=data.data
+            for(var i=0;i<data.length;i++){
+                $(".roomnumber").append('<option value="'+data[i].roomtypename+'">'+data[i].roomtypename+'</option>')
+            }
+        }
+    })
+</script>
+</body>
+</html>

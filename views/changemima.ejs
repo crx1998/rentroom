@@ -1,0 +1,129 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="css/jquery-ui.css" />
+    <link rel="stylesheet" href="themes/office/pqgrid.css" />
+    <link rel="stylesheet" href="css/pqgrid.min.css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-1.12.3.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/pqgrid.min.js"></script>
+    <style>
+        *{
+            padding:0px;
+            margin:0px;
+        }
+        body{
+            background-image: url("images/t01330527cde4cfc826.jpg");
+            background-size: 100%;
+        }
+        .box{
+            width:60%;
+            margin:0 auto;
+        }
+        .inforbox p{
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">酒店订房管理系统</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">入住管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/lobbycheck">大堂入住</a></li>
+                        <li><a href="/ordercheck">订单入住</a></li>
+                    </ul>
+                </li>
+                <li><a href="/checkout">退房管理</a></li>
+                <li><a href="/record">入房记录查询</a></li>
+                <li><a href="/roominfor">查询房间信息</a></li>
+                <li><a href="/roomadmin">房间管理</a></li>
+                <li><a href="/roompic">房间预览图</a></li>
+                <li class="active"><a href="/changemima">修改密码</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/del">退出系统</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="box">
+    <div class="formbox">
+        <form action="/changemimas" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="exampleInputEmail1">原密码</label>
+                <input type="password" class="form-control name ymima" name="ymima">
+            </div>
+            <p class="namep"></p>
+            <div class="form-group">
+                <label for="exampleInputPassword1">密码</label>
+                <input type="password" class="form-control mima"  name="mima">
+            </div>
+            <p class="mimap"></p>
+            <div class="form-group">
+                <label for="exampleInputPassword1">确认密码</label>
+                <input type="password" class="form-control mimas" placeholder="请重复输入">
+            </div>
+            <p class="mimasp"></p>
+            <input type="submit" class="btn btn-default tj" value="确认修改" disabled="disabled">
+        </form>
+    </div>
+</div>
+<script>
+    var nameb=false
+    var mimasb=false
+    $(".ymima").blur(function(){
+        $.ajax({
+            "url":"/checkmima",
+            "data":{
+                data:$(".ymima").val()
+            },
+            "success":function(data){
+                if(data==-2){
+                    alert("服务器错误")
+                }else if(data==1){
+                    $(".namep").html("该密码存在")
+                    nameb=true
+                }else{
+                    $(".namep").html("密码不存在")
+                }
+            }
+        })
+        ts()
+    })
+    $(".mimas").blur(function(){
+        var val=$(this).val()
+        if(val==$(".mima").val()){
+            $(".mimasp").html("密码一致")
+            mimasb=true
+        }else{
+            $(".mimasp").html("密码不一致")
+        }
+        ts()
+    })
+    function ts(){
+        if(nameb  && mimasb){
+            $(".tj").removeAttr("disabled")
+        }
+    }
+</script>
+</body>
+</html>

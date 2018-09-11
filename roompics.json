@@ -1,0 +1,245 @@
+{
+	"_id" : ObjectId("5b8e82f90b876413204c80a9"),
+	"roomnum" : NumberInt("407"),
+	"roomposition" : "四楼西三间",
+	"roomstate" : "0",
+	"roomtype" : "套间"
+},
+{
+	"_id" : ObjectId("5b8e83000b876413204c80aa"),
+	"roomnum" : NumberInt("408"),
+	"roomposition" : "四楼西四间",
+	"roomstate" : "0",
+	"roomtype" : "套间"
+},
+{
+	"_id" : ObjectId("5b8e837a0b876413204c80b2"),
+	"roomnum" : NumberInt("602"),
+	"roomposition" : "六楼西",
+	"roomstate" : "0",
+	"roomtype" : "总统套房"
+},
+{
+	"_id" : ObjectId("5b8e817f0b876413204c808d"),
+	"roomcontent" : "向阳处",
+	"roomnum" : NumberInt("201"),
+	"roomposition" : "二楼东侧一间",
+	"roomstate" : "1",
+	"roomtype" : "商务间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e82140b876413204c808e"),
+	"roomcontent" : "1",
+	"roomnum" : NumberInt("202"),
+	"roomposition" : "二楼东侧二间",
+	"roomstate" : "未出租",
+	"roomtype" : "商务间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e82190b876413204c808f"),
+	"roomcontent" : "向阳处",
+	"roomnum" : NumberInt("203"),
+	"roomposition" : "二楼东侧三间",
+	"roomstate" : "0",
+	"roomtype" : "商务间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e821d0b876413204c8090"),
+	"roomnum" : NumberInt("204"),
+	"roomposition" : "二楼东侧四间",
+	"roomstate" : "1",
+	"roomtype" : "商务间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e824b0b876413204c8097"),
+	"roomnum" : NumberInt("209"),
+	"roomposition" : "二楼西侧四间",
+	"roomstate" : "0",
+	"roomtype" : "商务间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e824f0b876413204c8098"),
+	"roomnum" : NumberInt("210"),
+	"roomposition" : "二楼西侧五间",
+	"roomstate" : "1",
+	"roomtype" : "商务间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e82600b876413204c8099"),
+	"roomnum" : NumberInt("301"),
+	"roomposition" : "三楼东侧一间",
+	"roomstate" : "0",
+	"roomtype" : "商务间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e82640b876413204c809a"),
+	"roomnum" : NumberInt("302"),
+	"roomposition" : "三楼东侧二间",
+	"roomstate" : "0",
+	"roomtype" : "商务间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e82670b876413204c809b"),
+	"roomnum" : NumberInt("303"),
+	"roomposition" : "三楼东侧三间",
+	"roomstate" : "1",
+	"roomtype" : "商务间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e826a0b876413204c809c"),
+	"roomnum" : NumberInt("304"),
+	"roomposition" : "三楼东侧四间",
+	"roomstate" : "0",
+	"roomtype" : "商务间【双人】"
+},
+{
+	"__v" : NumberInt("0"),
+	"_id" : ObjectId("5b9227331fb2ef4b6cca2686"),
+	"roomcontent" : "电风扇",
+	"roomnum" : NumberInt("206"),
+	"roomstate" : "1",
+	"roomtype" : "商务间【单人】"
+},
+{
+	"__v" : NumberInt("0"),
+	"_id" : ObjectId("5b92273a1fb2ef4b6cca2687"),
+	"roomcontent" : "342",
+	"roomnum" : NumberInt("207"),
+	"roomstate" : "1",
+	"roomtype" : "商务间【单人】"
+},
+{
+	"__v" : NumberInt("0"),
+	"_id" : ObjectId("5b9227641fb2ef4b6cca2688"),
+	"roomcontent" : "借记卡",
+	"roomnum" : NumberInt("205"),
+	"roomstate" : "1",
+	"roomtype" : "商务间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e826d0b876413204c809d"),
+	"roomnum" : NumberInt("305"),
+	"roomposition" : "三楼西侧一间",
+	"roomstate" : "0",
+	"roomtype" : "商务间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e82700b876413204c809e"),
+	"roomnum" : NumberInt("306"),
+	"roomposition" : "三楼西侧二间",
+	"roomstate" : "0",
+	"roomtype" : "商务间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e82740b876413204c809f"),
+	"roomnum" : NumberInt("307"),
+	"roomposition" : "三楼西侧三间",
+	"roomstate" : "0",
+	"roomtype" : "商务间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e82770b876413204c80a0"),
+	"roomnum" : NumberInt("308"),
+	"roomposition" : "三楼西侧四间",
+	"roomstate" : "0",
+	"roomtype" : "商务间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e82a90b876413204c80a1"),
+	"roomnum" : NumberInt("401"),
+	"roomposition" : "四楼东一间",
+	"roomstate" : "1",
+	"roomtype" : "行政间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e82ac0b876413204c80a2"),
+	"roomnum" : NumberInt("402"),
+	"roomposition" : "四楼东二间",
+	"roomstate" : "0",
+	"roomtype" : "行政间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e82b60b876413204c80a3"),
+	"roomnum" : NumberInt("403"),
+	"roomposition" : "四楼东三间",
+	"roomstate" : "0",
+	"roomtype" : "行政间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e82d00b876413204c80a6"),
+	"roomnum" : NumberInt("404"),
+	"roomposition" : "四楼西一间",
+	"roomstate" : "0",
+	"roomtype" : "行政间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e82e40b876413204c80a7"),
+	"roomnum" : NumberInt("405"),
+	"roomposition" : "四楼西二间",
+	"roomstate" : "0",
+	"roomtype" : "行政间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e82e70b876413204c80a8"),
+	"roomnum" : NumberInt("406"),
+	"roomposition" : "四楼西二间",
+	"roomstate" : "0",
+	"roomtype" : "行政间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e83280b876413204c80ab"),
+	"roomnum" : NumberInt("501"),
+	"roomposition" : "五楼东一间",
+	"roomstate" : "0",
+	"roomtype" : "花园间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e83300b876413204c80ac"),
+	"roomnum" : NumberInt("502"),
+	"roomposition" : "五楼东二间",
+	"roomstate" : "0",
+	"roomtype" : "花园间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e83390b876413204c80ad"),
+	"roomnum" : NumberInt("503"),
+	"roomposition" : "五楼东三间",
+	"roomstate" : "0",
+	"roomtype" : "花园间【单人】"
+},
+{
+	"_id" : ObjectId("5b8e83510b876413204c80ae"),
+	"roomnum" : NumberInt("504"),
+	"roomposition" : "五楼西一间",
+	"roomstate" : "0",
+	"roomtype" : "花园间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e83550b876413204c80af"),
+	"roomnum" : NumberInt("505"),
+	"roomposition" : "五楼西二间",
+	"roomstate" : "0",
+	"roomtype" : "花园间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e83590b876413204c80b0"),
+	"roomnum" : NumberInt("506"),
+	"roomposition" : "五楼西三间",
+	"roomstate" : "0",
+	"roomtype" : "花园间【双人】"
+},
+{
+	"_id" : ObjectId("5b8e836d0b876413204c80b1"),
+	"roomnum" : NumberInt("601"),
+	"roomposition" : "六楼东",
+	"roomstate" : "0",
+	"roomtype" : "豪华总统套房"
+},
+{
+	"__v" : NumberInt("0"),
+	"_id" : ObjectId("5b92155557c34f0c2030cc8f"),
+	"roomcontent" : "324",
+	"roomnum" : NumberInt("200"),
+	"roomstate" : "1",
+	"roomtype" : "商务间【单人】"
+},

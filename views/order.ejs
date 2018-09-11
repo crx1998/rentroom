@@ -1,0 +1,168 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-1.12.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <style>
+        *{
+            padding:0px;
+            margin:0px;
+        }
+        .box{
+            width:40%;
+            margin: 0px auto;
+            padding-top:20px;
+        }
+        body{
+            background-image: url("images/t01330527cde4cfc826.jpg");
+            background-size: 100%;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">酒店订房</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/">首页</a></li>
+                <li class="active"><a href="/order">在线预订</a></li>
+                <li><a href="/changeorder">订单查询</a></li>
+                <li><a href="/index">酒店管理</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="box">
+    <form action="/addorder" method="get">
+        <div class="form-group">
+            <label for="yonghuming">入住日期</label>
+            <input type="date" class="form-control" name="starttime" id="starttime">
+        </div>
+        <p class="namep"></p>
+        <div class="form-group">
+            <label for="yonghuming">离店日期</label>
+            <input type="date" class="form-control" name="endtime" id="endtime">
+        </div>
+        <div class="form-group">
+            <label for="yonghuming">房间类型</label>
+            <select name="roomnumber" class="roomnumber">
+            </select>
+        </div>
+        <div class="form-group">
+           剩余数量：<span class="lastnum"></span>
+           金钱    ：<span class="money"></span>元/天
+        </div>
+        <div class="form-group">
+            <label for="yonghuming">预定数量</label>
+            <input type="number" class="form-control" name="roomnum" id="roomnum">
+        </div>
+        <div class="form-group">
+            <label for="yonghuming">入住姓名</label>
+            <input type="text" class="form-control" name="checkinname" id="checkinname" placeholder="多人请用”,“隔开">
+        </div>
+        <div class="form-group">
+            <label for="yonghuming">联系人</label>
+            <input type="text" class="form-control" name="contactsname" id="contactsname">
+        </div>
+        <div class="form-group">
+            <label for="yonghuming">联系人电话</label>
+            <input type="number" class="form-control" name="contactstel" id="tel" placeholder="手机号">
+        </div>
+        <div class="form-group">
+            <label for="yonghuming">留言</label>
+           <textarea name="ordercontent"></textarea>
+        </div>
+        <div class="form-group">
+           <input type="submit" value="提交订单">
+           <input type="reset" value="取消">
+        </div>
+    </form>
+</div>
+</body>
+<script>
+    $("#tel").blur(function(){
+        var val=$(this).val()
+        checkPhone(val)
+    })
+    function checkPhone(phone){
+        if(!(/^1[34578]\d{9}$/.test(phone))){
+            alert("手机号码有误，请重填");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    $.ajax({
+        "url":"/getroomtype",
+        // "type":"jsonp",
+        "success":function(data){
+            var data=data.data
+            for(var i=0;i<data.length;i++){
+                   $(".roomnumber").append('<option value="'+data[i].roomtypename+'">'+data[i].roomtypename+'</option>')
+            }
+            getroomnum('商务间【单人】',data)
+            $('select').change(function(){
+                var val=$(this).val()
+                getroomnum(val,data)
+            })
+        }
+    })
+   function getroomnum(val,data){
+       for(var i=0;i<data.length;i++){
+          if(data[i].roomtypename == val){
+              $(".lastnum").html(data[i].lastnum)
+              $(".money").html(data[i].money)
+          }
+       }
+   }
+   $("#roomnum").blur(function(){
+       var val=$(".lastnum").html()
+       if($(this).val()>val){
+           alert("无更多剩余房间")
+       }
+   })
+    $("#starttime").change(function(){
+        var arr=$(this).val().split("-").join("")
+        var date=new Date()
+        var time=date.toLocaleDateString().split("/")
+        var times=""
+        for(var i=0;i<time.length;i++){
+            if(time[i]<10){
+                time[i]="0"+time[i]
+            }
+            times+=time[i]
+        }
+        var starttime=parseInt(arr)
+        var endtime=parseInt(times)
+        var timenum=starttime-endtime
+        if(timenum<0){
+            alert("不能选择以前的时间")
+            $(this).val("")
+        }
+    })
+    $("#endtime").change(function(){
+        var start=$("#starttime").val().split("-").join("")
+        var end=$(this).val().split("-").join("")
+        var timenum=end-start
+        if(timenum<0){
+            alert("时间选择错误")
+            $(this).val("")
+        }
+    })
+</script>
+</html>

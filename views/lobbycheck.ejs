@@ -1,0 +1,192 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理系统</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-1.12.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <style>
+        *{
+            padding:0px;
+            margin:0px;
+        }
+        body{
+            background-image: url("images/t01330527cde4cfc826.jpg");
+            background-size: 100%;
+        }
+       .box{
+           width:50%;
+           margin:0 auto;
+       }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">酒店订房管理系统</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">入住管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li class="active"><a href="/lobbycheck">大堂入住</a></li>
+                        <li><a href="/ordercheck">订单入住</a></li>
+                    </ul>
+                </li>
+                <li><a href="/checkout">退房管理</a></li>
+                <li><a href="/record">入房记录查询</a></li>
+                <li><a href="/roominfor">查询房间信息</a></li>
+                <li><a href="/roomadmin">房间管理</a></li>
+                <li><a href="/roompic">房间预览图</a></li>
+                <li><a href="/changemima">修改密码</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/del">退出系统</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="box">
+
+    <form action="/addlobby" method="get">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">客户信息</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="yonghuming">证件类型</label>
+                    <select name="cardtype">
+                        <option value="身份证">身份证</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="yonghuming">证件号</label>
+                    <input type="number" class="form-control" name="cardnum" id="typenum">
+                </div>
+                <div class="form-group">
+                    <label for="yonghuming">姓名</label>
+                    <input type="text" class="form-control" name="contactsname" id="contactsname">
+                </div>
+                <div class="form-group">
+                    <label for="yonghuming">性别</label>
+                    <select name="sex">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">房间信息</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="yonghuming">入住日期</label>
+                    <input type="date" class="form-control" name="starttime" id="starttime">
+                </div>
+                <div class="form-group">
+                    <label for="yonghuming">房间类型</label>
+                    <select name="roomnumber" class="roomnumber">
+                    </select>
+                </div>
+                <div class="form-group">
+                    剩余数量：<span class="lastnum"></span>
+                    金钱    ：<span class="money"></span>元/天
+                </div>
+                <div class="form-group">
+                    <label for="yonghuming">房间号</label>
+                    <select class="roomhao" name="roomhao">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="yonghuming">入住姓名</label>
+                    <input type="text" class="form-control" name="checkinname" id="checkinname" placeholder="多人请用”,“隔开">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="提交订单" class="btn">
+                    <input type="reset" value="取消" class="btn">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $.ajax({
+        "url":"/getroomtype",
+        // "type":"jsonp",
+        "success":function(data){
+            var data=data.data
+            console.log(data)
+            for(var i=0;i<data.length;i++){
+                $(".roomnumber").append('<option value="'+data[i].roomtypename+'">'+data[i].roomtypename+'</option>')
+            }
+            getroomnum('商务间【单人】',data)
+            $('select').change(function(){
+                var val=$(this).val()
+                getroomnum(val,data)
+            })
+        }
+    })
+    function getroomnum(val,data){
+        for(var i=0;i<data.length;i++){
+            if(data[i].roomtypename == val){
+                $(".lastnum").html(data[i].lastnum)
+                $(".money").html(data[i].money)
+            }
+        }
+    }
+    $.ajax({
+        "url": "/getroompic",
+        "success": function (data) {
+            getroomhao('商务间【单人】',data)
+            $('.roomnumber').change(function(){
+                var val=$(this).val()
+                getroomhao(val,data)
+            })
+        }
+    })
+    function getroomhao(val,data) {
+        $(".roomhao").html("")
+        for(var i=0;i<data.length;i++){
+            if(data[i].roomtype == val && data[i].roomstate==0){
+                $(".roomhao").append('<option value="'+data[i].roomnum+'">'+data[i].roomnum+'</option>')
+            }
+        }
+    }
+    $("#starttime").change(function(){
+        var arr=$(this).val().split("-").join("")
+        var date=new Date()
+        var time=date.toLocaleDateString().split("/")
+        var times=""
+        for(var i=0;i<time.length;i++){
+            if(time[i]<10){
+                time[i]="0"+time[i]
+            }
+            times+=time[i]
+        }
+        var starttime=parseInt(arr)
+        var endtime=parseInt(times)
+        var timenum=starttime-endtime
+        if(timenum<0){
+            alert("不能选择以前的时间")
+            $(this).val("")
+        }
+    })
+</script>
+</body>
+</html>
